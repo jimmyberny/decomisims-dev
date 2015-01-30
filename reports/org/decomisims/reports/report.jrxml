@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="72a588bf-f77a-4ffc-9a6e-dd119079ef0b">
+	<property name="ireport.zoom" value="1.771561000000001"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="76"/>
+    <parameter name="ISR" class="org.decomisims.reports.ReporteISR"/>
+	<parameter name="FECHA" class="java.util.Date" isForPrompting="false">
+		<defaultValueExpression><![CDATA[new java.util.Date()]]></defaultValueExpression>
+	</parameter>
+	<style name="titulo" mode="Transparent" hAlign="Center" vAlign="Middle" fontSize="16" isBold="true"/>
+	<style name="label" hAlign="Left" vAlign="Middle"/>
+	<style name="field" vAlign="Middle" isBold="true"/>
+	<title>
+		<band height="42" splitType="Stretch">
+			<rectangle radius="6">
+				<reportElement x="0" y="0" width="572" height="42" uuid="f9b27cfa-b95d-4c59-9b1f-90583623a48e"/>
+			</rectangle>
+			<staticText>
+				<reportElement style="titulo" x="0" y="0" width="572" height="42" uuid="ee29c873-46dd-4ae4-8c55-09d7491d54ae"/>
+				<text><![CDATA[COMPARATIVO DE BASE TRIBUTARIA ISR CONTRA BASE TRIBUTARIA IMSS]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="261">
+			<staticText>
+				<reportElement style="label" x="0" y="13" width="140" height="20" uuid="842d8124-560f-4742-86b7-5358185c8700"/>
+				<text><![CDATA[Empleado]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="field" x="141" y="13" width="431" height="20" uuid="04c1d9ff-e1ea-4a17-aadc-4e6975962b8d"/>
+				<textFieldExpression><![CDATA[$F{field}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="label" x="0" y="33" width="140" height="20" uuid="8f95c505-3d3e-4d54-a4ab-5cbbc8a27d7e"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Salario diario:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="label" x="0" y="53" width="140" height="20" uuid="674a83bd-8662-4507-a62b-b1b31272aa67"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Dias trabajados:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="label" x="0" y="73" width="140" height="20" uuid="71b30b0d-d873-472a-9e37-ef6f5486af85"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Total:]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="field" x="141" y="33" width="86" height="20" uuid="c8370314-2c3c-4800-b371-ddaeda63585b"/>
+				<textFieldExpression><![CDATA[$F{field}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="field" x="141" y="53" width="86" height="20" uuid="63e88b0d-ba26-4190-8ef2-35e58c2206fa"/>
+				<textFieldExpression><![CDATA[$F{field}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="field" x="141" y="73" width="86" height="20" uuid="e859c412-54a7-472e-8bf6-3ba341813595"/>
+				<textFieldExpression><![CDATA[$F{field}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="63" y="93" width="164" height="1" uuid="52aba56a-6fbf-4fa1-9c84-837e6f2f4668"/>
+			</line>
+			<textField>
+				<reportElement style="field" x="141" y="94" width="86" height="20" uuid="c8a74e42-581e-4af7-84a7-fc4bc9ec114a"/>
+				<textFieldExpression><![CDATA[$F{field}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="label" x="0" y="94" width="140" height="20" uuid="19ed8859-3876-42d5-b12d-da9087606147"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Premio de asistencia:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="label" x="0" y="114" width="140" height="20" uuid="0eac2509-b0b3-4a7c-8429-e621788b6743"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Horas extra:]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="field" x="141" y="114" width="86" height="20" uuid="16a01933-6629-4891-bb2e-b66401747192"/>
+				<textFieldExpression><![CDATA[$F{field}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="label" x="0" y="134" width="140" height="20" uuid="c04763e0-c6ac-498f-b921-7fd3d01818ed"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Vales de despensa:]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="field" x="141" y="134" width="86" height="20" uuid="985b7caa-060f-41a7-baa7-ebe4f031041d"/>
+				<textFieldExpression><![CDATA[$F{field}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="field" x="141" y="154" width="86" height="20" uuid="1c59d6a0-7961-45f7-ac87-a664bae63f89"/>
+				<textFieldExpression><![CDATA[$F{field}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="label" x="0" y="154" width="140" height="20" uuid="b25c6492-31eb-41f5-bfd9-32138debe374"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Ayudar comida:]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>
