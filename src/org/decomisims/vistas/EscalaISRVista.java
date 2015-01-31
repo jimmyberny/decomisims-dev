@@ -11,7 +11,7 @@ import org.decomisims.app.Aplicacion;
 import org.decomisims.app.Main;
 import org.decomisims.app.Vista;
 import org.decomisims.error.AppError;
-import org.decomisims.modelo.EscalaISR;
+import org.decomisims.modelo.ISREngine;
 import org.decomisims.modelo.RangoISR;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,7 +48,7 @@ public class EscalaISRVista extends javax.swing.JPanel implements Vista {
                 if (!str.isEmpty()) {
                     try {
                         Double val = Double.parseDouble(str);
-                        EscalaISR.Resultado res = EscalaISR.ESCALA.evaluar(val);
+                        ISREngine.Resultado res = ISREngine.ESCALA.evaluar(val);
 
                         jtfCuotaFija.setText(Main.MONEDA.format(res.getCuotaFija()));
                         jtfExcedente.setText(Main.MONEDA.format(res.getExcedente()));
@@ -69,7 +69,7 @@ public class EscalaISRVista extends javax.swing.JPanel implements Vista {
 
             @Override
             public int getRowCount() {
-                return EscalaISR.ESCALA.getNumRangos();
+                return ISREngine.ESCALA.getNumRangos();
             }
 
             @Override
@@ -99,7 +99,7 @@ public class EscalaISRVista extends javax.swing.JPanel implements Vista {
 
             @Override
             public Object getValueAt(int rowIndex, int columnIndex) {
-                RangoISR row = EscalaISR.ESCALA.getRango(rowIndex);
+                RangoISR row = ISREngine.ESCALA.getRango(rowIndex);
                 String res = "";
                 switch (columnIndex) {
                     case 0:

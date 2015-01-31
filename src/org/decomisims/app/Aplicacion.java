@@ -6,7 +6,7 @@ import java.awt.Color;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import org.decomisims.error.AppError;
-import org.decomisims.modelo.EscalaISR;
+import org.decomisims.modelo.ISREngine;
 
 /**
  *
@@ -25,5 +25,5 @@ public interface Aplicacion {
     public void mostrarTarea(String tarea) throws AppError;
     
     // Especificas
-    public EscalaISR getEscala();
+    public ISREngine getEscala();
 }

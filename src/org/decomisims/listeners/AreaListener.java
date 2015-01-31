@@ -2,13 +2,10 @@
  */
 package org.decomisims.listeners;
 
-import com.sun.org.apache.xerces.internal.impl.dv.xs.DecimalDV;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import org.decomisims.app.Aplicacion;
 import org.decomisims.modelo.Salarios;
 

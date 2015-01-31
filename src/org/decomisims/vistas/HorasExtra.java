@@ -3,12 +3,21 @@ package org.decomisims.vistas;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import org.decomisims.error.AppException;
+import org.decomisims.util.Format;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
  * @author José Bernardo Gómez-Andrade
  */
 public class HorasExtra extends javax.swing.JPanel {
+
+    private static final long serialVersionUID = 1123581321L;
+    private static final Logger log = LoggerFactory.getLogger(HorasExtra.class);
+    //
+    private Conceptos conceptos;
 
     public HorasExtra() {
         initComponents();
@@ -35,9 +44,9 @@ public class HorasExtra extends javax.swing.JPanel {
                     Totales t = new Totales();
                     t.sumar(new JTextField[]{jtf1ro, jtf2do, jtf3ro, jtf4to});
 
-                    jtfTotal.setText(String.valueOf(t.suma));
-                    jtfExentas.setText(String.valueOf(t.exento));
-                    jtfGravadas.setText(String.valueOf(t.gravado));
+                    jtfTotal.setText(Format.DECIMAL.format(t.suma));
+                    jtfExentas.setText(Format.DECIMAL.format(t.exento));
+                    jtfGravadas.setText(Format.DECIMAL.format(t.gravado));
                 } catch (NumberFormatException nfex) {
                     jtfTotal.setText(null);
                 }
@@ -48,11 +57,39 @@ public class HorasExtra extends javax.swing.JPanel {
         attach(dl, jtf2do);
         attach(dl, jtf3ro);
         attach(dl, jtf4to);
+    }
 
+    public void init(Conceptos conceptos) {
+        this.conceptos = conceptos;
+    }
+    
+    public void setSalarioHora(String val) {
+        jtfSalarioHora.setText(val);
+    }
+
+    public CalculoHoras calcular() {
+        CalculoHoras res = new CalculoHoras();
+        try {
+            Double limite = 5 * conceptos.getMinimo();
+            
+        } catch (AppException aex) {
+            log.error(aex.getMessage(), aex);
+        }
+        return res;
     }
 
     private void attach(DocumentListener listener, JTextField field) {
         field.getDocument().addDocumentListener(listener);
+    }
+
+    public class CalculoHoras {
+
+        private Double limite;
+        private Double exento;
+
+        public CalculoHoras() {
+        }
+
     }
 
     private class Totales {
@@ -83,7 +120,7 @@ public class HorasExtra extends javax.swing.JPanel {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        jtfSalarioHora = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jtf1ro = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
@@ -102,7 +139,8 @@ public class HorasExtra extends javax.swing.JPanel {
         jLabel1.setText("Salario por hora");
         jLabel1.setPreferredSize(new java.awt.Dimension(120, 26));
 
-        jTextField1.setPreferredSize(new java.awt.Dimension(180, 26));
+        jtfSalarioHora.setEditable(false);
+        jtfSalarioHora.setPreferredSize(new java.awt.Dimension(180, 26));
 
         jLabel2.setText("1ra semana");
         jLabel2.setPreferredSize(new java.awt.Dimension(120, 26));
@@ -149,7 +187,7 @@ public class HorasExtra extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jtfSalarioHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -187,7 +225,7 @@ public class HorasExtra extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jtfSalarioHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -230,13 +268,13 @@ public class HorasExtra extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jtf1ro;
     private javax.swing.JTextField jtf2do;
     private javax.swing.JTextField jtf3ro;
     private javax.swing.JTextField jtf4to;
     private javax.swing.JTextField jtfExentas;
     private javax.swing.JTextField jtfGravadas;
+    private javax.swing.JTextField jtfSalarioHora;
     private javax.swing.JTextField jtfTotal;
     // End of variables declaration//GEN-END:variables
 }

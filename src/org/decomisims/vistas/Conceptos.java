@@ -1,8 +1,13 @@
 package org.decomisims.vistas;
 
 import org.decomisims.app.Aplicacion;
+import org.decomisims.error.AppException;
 import org.decomisims.listeners.AntiguedadListener;
 import org.decomisims.listeners.AreaListener;
+import org.decomisims.listeners.SalarioListener;
+import org.decomisims.util.Format;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -10,23 +15,53 @@ import org.decomisims.listeners.AreaListener;
  */
 public class Conceptos extends javax.swing.JPanel {
 
+    private static final long serialVersionUID = 1123581321L;
+    private static final Logger log = LoggerFactory.getLogger(Conceptos.class);
+
     public Conceptos() {
         initComponents();
     }
-    
+
     public void init(Aplicacion app, OpcionesGenerales opciones) {
         veoHabitacion.setSalarios(opciones);
         veoComedor.setSalarios(opciones);
         veDespensa.init(opciones.getSalarioDF(), 0.4); // Excento hasta el 40%
+        horas.init(this);
         //
-        AntiguedadListener lAnt = new AntiguedadListener(jtfAntiguedad, 
+        AntiguedadListener lAnt = new AntiguedadListener(jtfAntiguedad,
                 jtfDiasVacaciones,
-                jtfPrimaVacacional, 
+                jtfPrimaVacacional,
                 jtfPrimaDias);
-        
+
         //
-        AreaListener lArea = new AreaListener(jrbA, jrbB, jrbDF, 
+        AreaListener lArea = new AreaListener(jrbA, jrbB, jrbDF,
                 jtfSalarioMinimo, opciones);
+
+        // 
+        SalarioListener sl = new SalarioListener(jtfSalario, horas);
+    }
+
+    public String getNombre() {
+        return String.format("%s %s %s",
+                jtfNombre.getText(),
+                jtfPaterno.getText(),
+                jtfMaterno.getText());
+    }
+
+    public Integer getDias() throws AppException {
+        return Format.INTEGER.parse(jtfDias.getText());
+    }
+
+    public Double getSalario() throws AppException {
+        return Format.CURRENCY.parse(jtfSalario.getText());
+    }
+
+    public Double getMinimo() throws AppException {
+        return Format.CURRENCY.parse(jtfSalarioMinimo.getText());
+    }
+
+    public HorasExtra getHoras() {
+        return horas;
     }
 
     @SuppressWarnings("unchecked")
@@ -75,8 +110,7 @@ public class Conceptos extends javax.swing.JPanel {
         veoHabitacion = new org.decomisims.vistas.ValorExentoOneroso();
         veoComedor = new org.decomisims.vistas.ValorExentoOneroso();
         veDespensa = new org.decomisims.vistas.ValorExento();
-        horasExtra1 = new org.decomisims.vistas.HorasExtra();
-        jPanel5 = new javax.swing.JPanel();
+        horas = new org.decomisims.vistas.HorasExtra();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -366,20 +400,7 @@ public class Conceptos extends javax.swing.JPanel {
         );
 
         jTabbedPane1.addTab("Ayudas", jPanel2);
-        jTabbedPane1.addTab("Horas extra", horasExtra1);
-
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 820, Short.MAX_VALUE)
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 485, Short.MAX_VALUE)
-        );
-
-        jTabbedPane1.addTab("Más prestaciones", jPanel5);
+        jTabbedPane1.addTab("Horas extra", horas);
 
         add(jTabbedPane1, java.awt.BorderLayout.PAGE_START);
         jTabbedPane1.getAccessibleContext().setAccessibleName("Ayudas");
@@ -388,7 +409,7 @@ public class Conceptos extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup bgArea;
-    private org.decomisims.vistas.HorasExtra horasExtra1;
+    private org.decomisims.vistas.HorasExtra horas;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel16;
@@ -403,7 +424,6 @@ public class Conceptos extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JRadioButton jrbA;
     private javax.swing.JRadioButton jrbB;

@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 /**
  *
  * @author jimmy
+ * @param <T>
  */
 public abstract class Format<T> {
 

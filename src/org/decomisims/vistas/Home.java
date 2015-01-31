@@ -1,21 +1,19 @@
 package org.decomisims.vistas;
 
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Font;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.Phrase;
-import com.itextpdf.text.pdf.PdfWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import org.decomisims.app.Aplicacion;
 import org.decomisims.app.Vista;
 import org.decomisims.error.AppError;
+import org.decomisims.error.AppException;
+import org.decomisims.modelo.ISREngine;
+import org.decomisims.reports.BaseTributaria;
+import org.decomisims.reports.Comparativo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,6 +23,7 @@ import org.slf4j.LoggerFactory;
  */
 public class Home extends javax.swing.JPanel implements Vista {
 
+    private static final long serialVersionUID = 1123581321L;
     private static final Logger log = LoggerFactory.getLogger(Home.class);
     private Aplicacion app;
 
@@ -97,6 +96,7 @@ public class Home extends javax.swing.JPanel implements Vista {
         jepContenido = new javax.swing.JEditorPane();
         jspVariables = new javax.swing.JScrollPane();
         jepVariables = new javax.swing.JEditorPane();
+        jrComp = new org.decomisims.reports.JRComparativo();
         ogGenerales = new org.decomisims.vistas.OpcionesGenerales();
 
         setLayout(new java.awt.BorderLayout());
@@ -127,14 +127,45 @@ public class Home extends javax.swing.JPanel implements Vista {
         jspVariables.setViewportView(jepVariables);
 
         jtpMain.addTab("Variables", jspVariables);
+        jtpMain.addTab("Comparativo", jrComp);
 
         add(jtpMain, java.awt.BorderLayout.CENTER);
         add(ogGenerales, java.awt.BorderLayout.LINE_END);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbGenerarReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGenerarReporteActionPerformed
-        // crearReporte();
+        //
+        try {
+            Comparativo comp = new Comparativo();
+            comp.setNombreCompleto(conceptos.getNombre());
+            Double sd = conceptos.getSalario();
+            Integer dias = conceptos.getDias();
+            Double st = sd * dias;
+            comp.setSalarioDiario(conceptos.getSalario());
+            comp.setDias(conceptos.getDias());
+            comp.setSalario(sd * dias); // Grafica
+            
+            // Calculo de horas extra
+            Integer tHoras = 0;
+            // Double sHora = conceptos.getHoras().getSalarioHora();
+            // Integer exentas = conceptos.getHorasExcentas();
+            // Integer gravadas = conceptos.getHorasGravadas();
+            // tHoras = exentas + gravadas;
 
+            // Determinar el valor de ISR
+            ISREngine.ESCALA.getRango(st);
+
+            List<BaseTributaria> res = new ArrayList<>(3);
+            res.add(new BaseTributaria("ISR", 1245d));
+            res.add(new BaseTributaria("IMSS Mínimas", 1145d));
+            res.add(new BaseTributaria("IMSS Superiores", 1345d));
+
+            // Report, render, show
+            jrComp.doReport(comp, res);
+            jtpMain.getModel().setSelectedIndex(3);
+        } catch (AppException apex) {
+            log.error(apex.getMessage(), apex);
+        }
     }//GEN-LAST:event_jbGenerarReporteActionPerformed
 
 
@@ -145,6 +176,7 @@ public class Home extends javax.swing.JPanel implements Vista {
     private javax.swing.JEditorPane jepVariables;
     private javax.swing.JPanel jpConceptos;
     private javax.swing.JPanel jpControles;
+    private org.decomisims.reports.JRComparativo jrComp;
     private javax.swing.JScrollPane jspConceptos;
     private javax.swing.JScrollPane jspVariables;
     private javax.swing.JTabbedPane jtpMain;

@@ -15,7 +15,7 @@ import java.util.Map;
 import java.util.Properties;
 import javax.swing.JFrame;
 import org.decomisims.error.AppError;
-import org.decomisims.modelo.EscalaISR;
+import org.decomisims.modelo.ISREngine;
 import org.decomisims.vistas.MensajeFactory;
 import org.jasypt.util.password.BasicPasswordEncryptor;
 import org.slf4j.Logger;
@@ -111,11 +111,11 @@ public class Main extends javax.swing.JFrame implements Aplicacion {
     }
 
     @Override
-    public EscalaISR getEscala() {
-        EscalaISR escala = null;
+    public ISREngine getEscala() {
+        ISREngine escala = null;
         try {
             ObjectInputStream ois = new ObjectInputStream(new FileInputStream("escala.cfg"));
-            escala = (EscalaISR) ois.readObject();
+            escala = (ISREngine) ois.readObject();
         } catch (FileNotFoundException ex) {
             log.error(ex.getMessage(), ex);
         } catch (IOException ex) {
@@ -126,7 +126,7 @@ public class Main extends javax.swing.JFrame implements Aplicacion {
         return escala;
     }
     
-    public void guardarEscala(EscalaISR escala) {
+    public void guardarEscala(ISREngine escala) {
         ObjectOutputStream oos = null;
         try {
             oos = new ObjectOutputStream(new FileOutputStream("escala.cfg"));

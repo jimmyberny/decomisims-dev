@@ -58,7 +58,7 @@ public class RangoISR {
         this.excedente = excedente;
     }
 
-    public boolean dentro(Double cantidad) {
+    public boolean isDentro(Double cantidad) {
         return cantidad.compareTo(min) >= 0
                 && cantidad.compareTo(max) <= 0;
     }

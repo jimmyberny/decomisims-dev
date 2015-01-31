@@ -2,6 +2,7 @@
  */
 package org.decomisims.modelo;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -9,9 +10,10 @@ import java.util.List;
  *
  * @author José Bernardo Gómez-Andrade
  */
-public class EscalaISR {
-    
-    public static final EscalaISR ESCALA = new EscalaISR();
+public class ISREngine {
+
+    public static final ISREngine ESCALA = new ISREngine();
+
     static {
         ESCALA.add(new RangoISR(1d, 496.07, 0d, 0.0192));
         ESCALA.add(new RangoISR(496.08, 4210.41, 9.52, 0.0640));
@@ -24,41 +26,54 @@ public class EscalaISR {
         ESCALA.add(new RangoISR(62500.01, 83333.33, 15070.90, 0.32d));
         ESCALA.add(new RangoISR(83333.34, 250000d, 21737.57, 0.34d));
         ESCALA.add(new RangoISR(250000.01, Double.MAX_VALUE, 78404.23, 0.35d));
-        
-    }
-    
-    private List<RangoISR> rangos;
 
-    public EscalaISR() {
+    }
+
+    private final List<RangoISR> rangos;
+
+    public ISREngine() {
         rangos = new LinkedList<>();
     }
-    
+
     private void add(RangoISR rango) {
         rangos.add(rango);
     }
-    
+
     public int getNumRangos() {
         return rangos.size();
     }
-    
+
     public RangoISR getRango(int i) {
         return rangos.get(i);
     }
-    
+
+    public RangoISR getRango(Double cantidad) {
+        RangoISR res = null;
+        Iterator<RangoISR> it = rangos.iterator();
+        do {
+            res = it.next();
+            if (res.isDentro(cantidad)) {
+                break;
+            }
+        } while (it.hasNext());
+        return res;
+    }
+
     public Resultado evaluar(Double cantidad) {
         Resultado res = null;
         int i = 0;
-        do  {
+        do {
             RangoISR tmp = rangos.get(i);
-            if (tmp.dentro(cantidad)) {
+            if (tmp.isDentro(cantidad)) {
                 res = new Resultado(tmp, cantidad);
             }
             i++;
         } while (res == null || i > rangos.size());
         return res;
     }
-    
+
     public static class Resultado {
+
         private Double cantidad;
         private RangoISR rango;
 
@@ -66,23 +81,23 @@ public class EscalaISR {
             this.rango = rango;
             this.cantidad = cantidad;
         }
-        
+
         public Double getCuotaFija() {
             return rango.getCuota();
         }
-        
+
         public Double getPorcentajeExcedente() {
             return rango.getExcedente();
         }
-        
+
         public Double getExcedente() {
             return cantidad - rango.getMin();
         }
-        
+
         public Double getExcedenteRelativo() {
             return getExcedente() * rango.getExcedente();
         }
-        
+
         public Double getTotal() {
             return getCuotaFija() + getExcedenteRelativo();
         }
