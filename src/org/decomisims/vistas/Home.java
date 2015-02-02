@@ -31,7 +31,7 @@ public class Home extends javax.swing.JPanel implements Vista {
 
     public Home() {
         initComponents();
-        Format.PERCENT.setPercentFormat("0.00%");
+        Format.setPercentFormat("0.00%");
     }
 
     @Override
