@@ -302,7 +302,7 @@ public abstract class Format<T> {
 
 		@Override
 		protected String getFormated(String value) {
-			return value != null ? value.toString() : "";
+			return value != null ? value : "";
 		}
 
 		@Override

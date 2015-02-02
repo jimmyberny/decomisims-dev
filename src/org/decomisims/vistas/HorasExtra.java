@@ -3,7 +3,6 @@ package org.decomisims.vistas;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import org.decomisims.error.AppException;
 import org.decomisims.util.Format;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,8 +15,6 @@ public class HorasExtra extends javax.swing.JPanel {
 
     private static final long serialVersionUID = 1123581321L;
     private static final Logger log = LoggerFactory.getLogger(HorasExtra.class);
-    //
-    private Conceptos conceptos;
 
     public HorasExtra() {
         initComponents();
@@ -59,37 +56,32 @@ public class HorasExtra extends javax.swing.JPanel {
         attach(dl, jtf4to);
     }
 
-    public void init(Conceptos conceptos) {
-        this.conceptos = conceptos;
-    }
-    
     public void setSalarioHora(String val) {
         jtfSalarioHora.setText(val);
     }
 
-    public CalculoHoras calcular() {
-        CalculoHoras res = new CalculoHoras();
-        try {
-            Double limite = 5 * conceptos.getMinimo();
-            
-        } catch (AppException aex) {
-            log.error(aex.getMessage(), aex);
-        }
-        return res;
+    public Double getSalarioHora() {
+        return Format.CURRENCY.parse(jtfSalarioHora.getText(), 0d);
+    }
+
+    public Integer getHorasExentas() {
+        return Format.INTEGER.parse(jtfExentas.getText(), 0);
+    }
+
+    public Integer getHorasGravadas() {
+        return Format.INTEGER.parse(jtfGravadas.getText(), 0);
+    }
+
+    public Double getExcento() {
+        return Format.DECIMAL.parse(jtfExentas.getText(), 0d) * getSalarioHora();
+    }
+
+    public Double getGravado() {
+        return Format.DECIMAL.parse(jtfGravadas.getText(), 0d) * getSalarioHora();
     }
 
     private void attach(DocumentListener listener, JTextField field) {
         field.getDocument().addDocumentListener(listener);
-    }
-
-    public class CalculoHoras {
-
-        private Double limite;
-        private Double exento;
-
-        public CalculoHoras() {
-        }
-
     }
 
     private class Totales {
@@ -106,7 +98,7 @@ public class HorasExtra extends javax.swing.JPanel {
             exento = 0;
             gravado = 0;
             for (JTextField field : fields) {
-                Double val = Double.parseDouble(field.getText().isEmpty() ? "0" : field.getText());
+                Double val = Format.DECIMAL.parse(field.getText(), 0d);
                 suma += val;
                 exento += val <= 9 ? val : 9;
             }

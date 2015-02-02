@@ -26,7 +26,6 @@ public class Conceptos extends javax.swing.JPanel {
         veoHabitacion.setSalarios(opciones);
         veoComedor.setSalarios(opciones);
         veDespensa.init(opciones.getSalarioDF(), 0.4); // Excento hasta el 40%
-        horas.init(this);
         //
         AntiguedadListener lAnt = new AntiguedadListener(jtfAntiguedad,
                 jtfDiasVacaciones,
@@ -62,6 +61,26 @@ public class Conceptos extends javax.swing.JPanel {
 
     public HorasExtra getHoras() {
         return horas;
+    }
+    
+    public Double getPremioAsistencia() {
+        return Format.CURRENCY.parse(jtfPremioAsistencia.getText(), 0d);
+    }
+    
+    public Double getAyudaHabitacion() {
+        return veoHabitacion.getValor();
+    }
+    
+    public Double getAyudaComedor() {
+        return veoComedor.getValor();
+    }
+    
+    public Double getValesDespensa() {
+        return veDespensa.getValor();
+    }
+    
+    public Double getValesGasolina() {
+        return Format.DECIMAL.parse(jtfValesGasolina.getText(), 0d);
     }
 
     @SuppressWarnings("unchecked")
@@ -101,10 +120,10 @@ public class Conceptos extends javax.swing.JPanel {
         jtfSalarioMinimo = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
-        jtfNombre7 = new javax.swing.JTextField();
+        jtfValesGasolina = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jtfNombre5 = new javax.swing.JTextField();
+        jtfPremioAsistencia = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         veoHabitacion = new org.decomisims.vistas.ValorExentoOneroso();
@@ -328,7 +347,8 @@ public class Conceptos extends javax.swing.JPanel {
         jLabel7.setText("Premio de asistencia");
         jLabel7.setPreferredSize(new java.awt.Dimension(160, 26));
 
-        jtfNombre7.setPreferredSize(new java.awt.Dimension(220, 26));
+        jtfValesGasolina.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        jtfValesGasolina.setPreferredSize(new java.awt.Dimension(120, 26));
 
         jLabel10.setText("Ayuda de comedor");
         jLabel10.setPreferredSize(new java.awt.Dimension(160, 26));
@@ -336,7 +356,8 @@ public class Conceptos extends javax.swing.JPanel {
         jLabel9.setText("Vales de gasolina");
         jLabel9.setPreferredSize(new java.awt.Dimension(160, 26));
 
-        jtfNombre5.setPreferredSize(new java.awt.Dimension(220, 26));
+        jtfPremioAsistencia.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        jtfPremioAsistencia.setPreferredSize(new java.awt.Dimension(120, 26));
 
         jLabel6.setText("Ayuda de habitación");
         jLabel6.setPreferredSize(new java.awt.Dimension(160, 26));
@@ -358,7 +379,7 @@ public class Conceptos extends javax.swing.JPanel {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jtfNombre5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jtfPremioAsistencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -366,7 +387,7 @@ public class Conceptos extends javax.swing.JPanel {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jtfNombre7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jtfValesGasolina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -377,6 +398,10 @@ public class Conceptos extends javax.swing.JPanel {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtfPremioAsistencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(veoHabitacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -385,18 +410,14 @@ public class Conceptos extends javax.swing.JPanel {
                     .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(veoComedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jtfNombre5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(veDespensa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jtfNombre7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(319, Short.MAX_VALUE))
+                    .addComponent(jtfValesGasolina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(340, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Ayudas", jPanel2);
@@ -434,14 +455,14 @@ public class Conceptos extends javax.swing.JPanel {
     private javax.swing.JTextField jtfDiasVacaciones;
     private javax.swing.JTextField jtfMaterno;
     private javax.swing.JTextField jtfNombre;
-    private javax.swing.JTextField jtfNombre5;
-    private javax.swing.JTextField jtfNombre7;
     private javax.swing.JTextField jtfPaterno;
+    private javax.swing.JTextField jtfPremioAsistencia;
     private javax.swing.JTextField jtfPrimaDias;
     private javax.swing.JTextField jtfPrimaRiesgo;
     private javax.swing.JTextField jtfPrimaVacacional;
     private javax.swing.JTextField jtfSalario;
     private javax.swing.JTextField jtfSalarioMinimo;
+    private javax.swing.JTextField jtfValesGasolina;
     private javax.swing.JLabel lblDiasVacaciones;
     private javax.swing.JLabel lblMaterno;
     private javax.swing.JLabel lblPaterno;

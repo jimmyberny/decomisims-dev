@@ -5,6 +5,7 @@ package org.decomisims.vistas;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import org.decomisims.app.Aplicacion;
+import org.decomisims.util.Format;
 
 /**
  *
@@ -54,6 +55,10 @@ public class ValorExento extends javax.swing.JPanel {
 
     public void init(Double base, Double porcentaje) {
         referencia = base * porcentaje;
+    }
+    
+    public Double getValor() {
+        return Format.DECIMAL.parse(jtfValor.getText(), 0d);
     }
 
     @SuppressWarnings("unchecked")

@@ -5,6 +5,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import org.decomisims.app.Aplicacion;
 import org.decomisims.modelo.Salarios;
+import org.decomisims.util.Format;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -104,11 +105,7 @@ public class ValorExentoOneroso extends javax.swing.JPanel {
     }
 
     public Double getValor() {
-        try {
-            return Double.parseDouble(jtfValor.getText());
-        } catch (NumberFormatException nfex) {
-            return 0d;
-        }
+       return Format.DECIMAL.parse(jtfValor.getText(), 0d);
     }
 
     @SuppressWarnings("unchecked")

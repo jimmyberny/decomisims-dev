@@ -38,11 +38,15 @@ public class SalarioListener implements DocumentListener {
     }
 
     private void eval() {
-        try {
-            Double diario = Format.CURRENCY.parse(field.getText());
-            extra.setSalarioHora(Format.CURRENCY.format(diario / 8));
-        } catch (AppException ex) {
+        if (!field.getText().isEmpty()) {
+            try {
+                Double diario = Format.CURRENCY.parse(field.getText());
+                extra.setSalarioHora(Format.CURRENCY.format(diario / 8));
+            } catch (AppException ex) {
 
+            }
+        } else {
+            extra.setSalarioHora("");
         }
     }
 

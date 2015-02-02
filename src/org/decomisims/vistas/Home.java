@@ -12,8 +12,10 @@ import org.decomisims.app.Vista;
 import org.decomisims.error.AppError;
 import org.decomisims.error.AppException;
 import org.decomisims.modelo.ISREngine;
+import org.decomisims.modelo.RangoISR;
 import org.decomisims.reports.BaseTributaria;
 import org.decomisims.reports.Comparativo;
+import org.decomisims.util.Format;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,6 +31,7 @@ public class Home extends javax.swing.JPanel implements Vista {
 
     public Home() {
         initComponents();
+        Format.PERCENT.setPercentFormat("0.00%");
     }
 
     @Override
@@ -138,23 +141,57 @@ public class Home extends javax.swing.JPanel implements Vista {
         try {
             Comparativo comp = new Comparativo();
             comp.setNombreCompleto(conceptos.getNombre());
-            Double sd = conceptos.getSalario();
-            Integer dias = conceptos.getDias();
-            Double st = sd * dias;
             comp.setSalarioDiario(conceptos.getSalario());
             comp.setDias(conceptos.getDias());
-            comp.setSalario(sd * dias); // Grafica
             
             // Calculo de horas extra
-            Integer tHoras = 0;
-            // Double sHora = conceptos.getHoras().getSalarioHora();
-            // Integer exentas = conceptos.getHorasExcentas();
-            // Integer gravadas = conceptos.getHorasGravadas();
-            // tHoras = exentas + gravadas;
+            HorasExtra extras = conceptos.getHoras();
+            Integer hExentas = extras.getHorasExentas();
+            Integer hGravadas = extras.getHorasGravadas();
+            Integer hTots = hExentas + hGravadas;
+            comp.setHoras(hTots);
+            comp.setSalarioHora(extras.getSalarioHora());
+            comp.setHorasExentas(hExentas);
+            comp.setHorasGravadas(hGravadas);
+            comp.setTotalHorasExentas(extras.getExcento());
+            comp.setTotalHorasGravadas(extras.getGravado());
+            
+            // Asistencia
+            comp.setPremioAsistencia(conceptos.getPremioAsistencia());
+            
+            comp.setAyudaHabitacion(conceptos.getAyudaHabitacion());
+            comp.setAyudaComedor(conceptos.getAyudaComedor());
+            comp.setValesDespensa(conceptos.getValesDespensa());
+            comp.setValesGasolina(conceptos.getValesGasolina());
 
             // Determinar el valor de ISR
-            ISREngine.ESCALA.getRango(st);
+            // Sumar horas gravadas
+            Double ingresoExento = 0d;
+            ingresoExento += comp.getTotalHorasExentas();
 
+            Double ingresoGravado = comp.getSalarioDiario() * comp.getDias();
+            ingresoGravado += comp.getTotalHorasGravadas();
+            ingresoGravado += comp.getPremioAsistencia();
+            ingresoGravado += comp.getAyudaHabitacion();
+            ingresoGravado += comp.getAyudaComedor();
+            ingresoGravado += comp.getValesDespensa();
+            ingresoGravado += comp.getValesGasolina();
+            comp.setIngresoExento(ingresoExento);
+            comp.setIngresoGravado(ingresoGravado);
+            comp.setIngresoBruto(ingresoGravado + ingresoExento);
+            // ISR
+            RangoISR rango = ISREngine.ESCALA.getRango(ingresoGravado);
+            comp.setLimiteInferior(rango.getMin());
+            comp.setLimiteSuperior(rango.getMax());
+            comp.setExcedente(rango.getExcedente()); // Porcentaje excedente
+            comp.setCuota(rango.getCuota());
+            comp.setIngresoExcedente(ingresoGravado - comp.getLimiteInferior());
+            comp.setCuotaExcedente(comp.getIngresoExcedente() * comp.getExcedente());
+            comp.setRetencion(comp.getCuota() + comp.getCuotaExcedente());
+            comp.setIngresoNeto(comp.getIngresoBruto() - comp.getRetencion());
+            
+            
+            // Grafica
             List<BaseTributaria> res = new ArrayList<>(3);
             res.add(new BaseTributaria("ISR", 1245d));
             res.add(new BaseTributaria("IMSS Mínimas", 1145d));
@@ -162,6 +199,8 @@ public class Home extends javax.swing.JPanel implements Vista {
 
             // Report, render, show
             jrComp.doReport(comp, res);
+            
+            
             jtpMain.getModel().setSelectedIndex(3);
         } catch (AppException apex) {
             log.error(apex.getMessage(), apex);
