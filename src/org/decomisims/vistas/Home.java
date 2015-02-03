@@ -12,6 +12,7 @@ import org.decomisims.app.Vista;
 import org.decomisims.error.AppError;
 import org.decomisims.error.AppException;
 import org.decomisims.modelo.ISREngine;
+import org.decomisims.modelo.RamosISREngine;
 import org.decomisims.modelo.RangoISR;
 import org.decomisims.reports.BaseTributaria;
 import org.decomisims.reports.Comparativo;
@@ -187,18 +188,26 @@ public class Home extends javax.swing.JPanel implements Vista {
             comp.setCuota(rango.getCuota());
             comp.setIngresoExcedente(ingresoGravado - comp.getLimiteInferior());
             comp.setCuotaExcedente(comp.getIngresoExcedente() * comp.getExcedente());
-            comp.setRetencion(comp.getCuota() + comp.getCuotaExcedente());
-            comp.setIngresoNeto(comp.getIngresoBruto() - comp.getRetencion());
+            comp.setISR(comp.getCuota() + comp.getCuotaExcedente());
             
+            // Ramos ISR
+            RamosISREngine reng = new RamosISREngine(ingresoGravado);
+            comp.setPatron(reng.getPatron());
+            comp.setAsegurado(reng.getAsegurado());
+            // Total retencion
+            comp.setRetencion(comp.getISR() + comp.getAsegurado());
+            // Total ingreso
+            comp.setIngresoNeto(comp.getIngresoBruto() - comp.getRetencion());
             
             // Grafica
             List<BaseTributaria> res = new ArrayList<>(3);
-            res.add(new BaseTributaria("ISR", 1245d));
+            res.add(new BaseTributaria("ISR", comp.getIngresoNeto()));
             res.add(new BaseTributaria("IMSS Mínimas", 1145d));
             res.add(new BaseTributaria("IMSS Superiores", 1345d));
+            
 
             // Report, render, show
-            jrComp.doReport(comp, res);
+            jrComp.doReport(comp, res, reng.getRamos());
             
             
             jtpMain.getModel().setSelectedIndex(3);

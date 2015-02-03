@@ -36,6 +36,9 @@ public class Comparativo implements Serializable {
     private Double ingresoExcedente;
     private Double cuotaExcedente;
     private Double retencion;
+    private Double patron;
+    private Double asegurado;
+    private Double ISR;
 
     public Comparativo() {
     }
@@ -248,5 +251,28 @@ public class Comparativo implements Serializable {
         this.retencion = retencion;
     }
 
-    
+    public Double getPatron() {
+        return patron;
+    }
+
+    public void setPatron(Double patron) {
+        this.patron = patron;
+    }
+
+    public Double getAsegurado() {
+        return asegurado;
+    }
+
+    public void setAsegurado(Double asegurado) {
+        this.asegurado = asegurado;
+    }
+
+    public Double getISR() {
+        return ISR;
+    }
+
+    public void setISR(Double ISR) {
+        this.ISR = ISR;
+    }
+
 }

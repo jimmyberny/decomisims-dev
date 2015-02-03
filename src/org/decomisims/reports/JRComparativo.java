@@ -27,6 +27,7 @@ import net.sf.jasperreports.engine.data.JRBeanArrayDataSource;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import org.decomisims.modelo.RamoISR;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -75,7 +76,9 @@ public class JRComparativo extends javax.swing.JPanel {
         return jr != null;
     }
 
-    public void doReport(Comparativo comp, List<BaseTributaria> datos) {
+    public void doReport(Comparativo comp, 
+            List<BaseTributaria> datos,
+            List<RamoISR> ramos) {
         if (jr == null) {
             return;
         }
@@ -85,12 +88,15 @@ public class JRComparativo extends javax.swing.JPanel {
             // 
             params.put("FECHA", new Date());
             params.put("COMPARATIVO", comp);
+            params.put("RAMOS", ramos);
+            params.put("GRAFICA", datos);
             // Esta
             ResourceBundle bundle = ResourceBundle.getBundle("org/decomisims/reports/comparativo", Locale.getDefault());
             params.put("REPORT_RESOURCE_BUNDLE", bundle);
 
             // 
-            JasperPrint jp = JasperFillManager.fillReport(jr, params, new JRBeanCollectionDataSource(datos));
+            
+            JasperPrint jp = JasperFillManager.fillReport(jr, params, new JREmptyDataSource(1));
             jrvView.update(jp);
         } catch (JRException jrex) {
             log.error(jrex.getMessage(), jrex);

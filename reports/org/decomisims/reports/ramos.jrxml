@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ramos" pageWidth="555" pageHeight="802" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="be6c1b0f-0e3e-4345-b768-aafb4c3cd269">
+	<property name="ireport.zoom" value="1.771561000000003"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="header" vAlign="Bottom" isBold="true"/>
+	<field name="_THIS" class="org.decomisims.modelo.RamoISR"/>
+	<variable name="SUM_PATRON" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{_THIS}.getPatron()]]></variableExpression>
+		<initialValueExpression><![CDATA[new Double(0d)]]></initialValueExpression>
+	</variable>
+	<variable name="SUM_ASEG" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{_THIS}.getAsegurado()]]></variableExpression>
+		<initialValueExpression><![CDATA[new Double(0d)]]></initialValueExpression>
+	</variable>
+	<pageHeader>
+		<band height="23">
+			<staticText>
+				<reportElement x="0" y="0" width="155" height="20" uuid="993c0ecf-9d77-4aac-9339-76483841e8cf"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ramos de seguros]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="22" width="228" height="1" uuid="ec1ae2b5-9fe1-462f-8d8b-6d0461d68d4c"/>
+			</line>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="16" splitType="Stretch">
+			<staticText>
+				<reportElement style="header" x="0" y="0" width="155" height="16" uuid="8c32fcf6-7295-4f96-af4a-11c1291988e3"/>
+				<text><![CDATA[Ramo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="header" x="155" y="0" width="80" height="16" uuid="a73f995a-6b3b-4f0a-bdd4-f14bd8b9f9c6"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[% Patron]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="header" x="235" y="0" width="80" height="16" uuid="c6bbcc2c-7a92-497f-bd4b-90a7a91353a7"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Patron]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="header" x="315" y="0" width="80" height="16" uuid="5b78ff2c-924d-41c5-ab9a-b20a36e117c4"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[% Asegurado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="header" x="395" y="0" width="80" height="16" uuid="c8af4ef7-f1a9-4330-80f9-e9a5f497c055"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Asegurado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="header" x="475" y="0" width="80" height="16" uuid="f137491f-b4e0-44e3-91e2-52f61a722daa"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Suma]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="18" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="155" height="18" uuid="081911b5-be62-458c-90be-dea99f85b683"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{_THIS}.getNombre()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="155" y="0" width="80" height="18" uuid="b2c83496-45ff-40c1-9ad0-2cce5e79f02c"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[org.decomisims.util.Format.PERCENT.format($F{_THIS}.getPcPatron())]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="235" y="0" width="80" height="18" uuid="6f95ab81-bce9-4c14-ac0f-21f554132180"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[org.decomisims.util.Format.CURRENCY.format($F{_THIS}.getPatron())]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="315" y="0" width="80" height="18" uuid="51967bfb-3a11-436f-b57c-9628ded7baa5"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[org.decomisims.util.Format.PERCENT.format($F{_THIS}.getPcAsegurado())]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="395" y="0" width="80" height="18" uuid="2f0e7ba4-c6ab-4c5f-8446-50f82a65f91d"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[org.decomisims.util.Format.CURRENCY.format($F{_THIS}.getAsegurado())]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="475" y="0" width="80" height="18" uuid="146d20ab-7151-4971-a0b1-9d00ac0a970c"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[org.decomisims.util.Format.CURRENCY.format($F{_THIS}.getSuma())]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="21">
+			<textField>
+				<reportElement x="395" y="3" width="80" height="18" uuid="6bcb5791-f1e4-4b58-b12f-f1751c4e06a0"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[org.decomisims.util.Format.CURRENCY.format($V{SUM_ASEG})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="235" y="2" width="80" height="18" uuid="92100185-2320-44ce-9218-de05d5cff1f6"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[org.decomisims.util.Format.CURRENCY.format($V{SUM_PATRON})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="header" x="75" y="3" width="80" height="16" uuid="43b86cd8-497b-4eb9-a191-ec49302f5fe5"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Totales]]></text>
+			</staticText>
+			<line>
+				<reportElement x="75" y="3" width="400" height="1" uuid="3f0fc232-0de1-4d84-a9f0-a89f1219d40d"/>
+			</line>
+		</band>
+	</summary>
+</jasperReport>

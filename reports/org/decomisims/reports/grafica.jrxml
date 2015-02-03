@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="grafica" pageWidth="555" pageHeight="802" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="a813f175-158a-41a1-a482-ea7f541cd1f0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<field name="_THIS" class="org.decomisims.reports.BaseTributaria"/>
+	<summary>
+		<band height="280" splitType="Stretch">
+			<barChart>
+				<chart isShowLegend="true" theme="default">
+					<reportElement x="0" y="0" width="540" height="280" uuid="f3063276-5eb8-4a44-9ca9-a4ea626b2734"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend position="Left"/>
+				</chart>
+				<categoryDataset>
+					<categorySeries>
+						<seriesExpression><![CDATA["Base tributaria"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{_THIS}.getNombre()]]></categoryExpression>
+						<valueExpression><![CDATA[$F{_THIS}.getValor()]]></valueExpression>
+						<labelExpression><![CDATA[org.decomisims.util.Format.CURRENCY.format($F{_THIS}.getValor())]]></labelExpression>
+					</categorySeries>
+				</categoryDataset>
+				<barPlot isShowLabels="true" isShowTickLabels="true" isShowTickMarks="false">
+					<plot/>
+					<itemLabel/>
+					<categoryAxisFormat>
+						<axisFormat verticalTickLabels="false"/>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat verticalTickLabels="false"/>
+					</valueAxisFormat>
+				</barPlot>
+			</barChart>
+		</band>
+	</summary>
+</jasperReport>
