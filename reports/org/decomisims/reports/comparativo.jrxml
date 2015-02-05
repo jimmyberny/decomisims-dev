@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="comparativo" pageWidth="612" pageHeight="792" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="72a588bf-f77a-4ffc-9a6e-dd119079ef0b">
-	<property name="ireport.zoom" value="0.6830134553650733"/>
+	<property name="ireport.zoom" value="1.6105100000000072"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="205"/>
 	<style name="titulo" mode="Transparent" hAlign="Center" vAlign="Middle" fontSize="16" isBold="true"/>
 	<style name="label" hAlign="Left" vAlign="Middle"/>
 	<style name="field" vAlign="Middle" isBold="true"/>
 	<style name="right" hAlign="Right" vAlign="Middle" isBold="true"/>
+	<style name="seccion" hAlign="Left" vAlign="Middle" fontSize="12" isBold="true"/>
 	<subDataset name="MyDataset" uuid="f8075af5-4cbb-420b-bd65-ee44c30cfda7"/>
 	<parameter name="FECHA" class="java.util.Date">
 		<defaultValueExpression><![CDATA[new java.util.Date()]]></defaultValueExpression>
@@ -84,7 +85,7 @@
 				<textFieldExpression><![CDATA[org.decomisims.util.Format.CURRENCY.format($P{COMPARATIVO}.getISR())]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement positionType="Float" x="5" y="317" width="100" height="20" uuid="b7ee5193-8cde-4a80-8ad9-87570caa2aba"/>
+				<reportElement style="seccion" positionType="Float" x="5" y="317" width="100" height="20" uuid="b7ee5193-8cde-4a80-8ad9-87570caa2aba"/>
 				<textElement verticalAlignment="Bottom">
 					<font size="12" isBold="true"/>
 				</textElement>
@@ -177,11 +178,11 @@
 				<text><![CDATA[Ayuda habitación:]]></text>
 			</staticText>
 			<textField>
-				<reportElement style="field" x="142" y="101" width="86" height="20" uuid="985b7caa-060f-41a7-baa7-ebe4f031041d"/>
+				<reportElement style="right" x="142" y="101" width="86" height="20" uuid="985b7caa-060f-41a7-baa7-ebe4f031041d"/>
 				<textFieldExpression><![CDATA[org.decomisims.util.Format.CURRENCY.format($P{COMPARATIVO}.getAyudaHabitacion())]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="field" x="142" y="121" width="86" height="20" uuid="1c59d6a0-7961-45f7-ac87-a664bae63f89"/>
+				<reportElement style="right" x="142" y="121" width="86" height="20" uuid="1c59d6a0-7961-45f7-ac87-a664bae63f89"/>
 				<textFieldExpression><![CDATA[org.decomisims.util.Format.CURRENCY.format($P{COMPARATIVO}.getAyudaComedor())]]></textFieldExpression>
 			</textField>
 			<staticText>
@@ -235,11 +236,11 @@
 				<text><![CDATA[Vales de despensa:]]></text>
 			</staticText>
 			<textField>
-				<reportElement style="field" x="142" y="161" width="86" height="20" uuid="0fcd23a8-dcbf-4d53-b81a-710442c53b11"/>
+				<reportElement style="right" x="142" y="161" width="86" height="20" uuid="0fcd23a8-dcbf-4d53-b81a-710442c53b11"/>
 				<textFieldExpression><![CDATA[org.decomisims.util.Format.CURRENCY.format($P{COMPARATIVO}.getValesGasolina())]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="field" x="142" y="141" width="86" height="20" uuid="8bafac9e-225f-4af2-9255-9507b85d8cc5"/>
+				<reportElement style="right" x="142" y="141" width="86" height="20" uuid="8bafac9e-225f-4af2-9255-9507b85d8cc5"/>
 				<textFieldExpression><![CDATA[org.decomisims.util.Format.CURRENCY.format($P{COMPARATIVO}.getValesDespensa())]]></textFieldExpression>
 			</textField>
 			<line>
@@ -263,11 +264,6 @@
 				<reportElement style="right" x="362" y="189" width="120" height="16" uuid="90f85708-1072-48c4-85c3-086d0f22d090"/>
 				<textFieldExpression><![CDATA[org.decomisims.util.Format.CURRENCY.format($P{COMPARATIVO}.getIngresoGravado())]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement style="label" x="2" y="210" width="120" height="16" uuid="2c660f22-f510-437c-a529-c5f0ab0e1e99"/>
-				<textElement textAlignment="Right"/>
-				<text><![CDATA[I.S.R.]]></text>
-			</staticText>
 			<staticText>
 				<reportElement style="label" x="1" y="230" width="120" height="16" uuid="3a636063-0ffc-4101-9779-cc4b23f7b103"/>
 				<textElement textAlignment="Right"/>
@@ -321,6 +317,10 @@
 				<reportElement style="label" x="1" y="278" width="120" height="16" uuid="db85375b-c12d-4d01-a888-ec6e8f1ac388"/>
 				<textElement textAlignment="Right"/>
 				<text><![CDATA[Cuota por excedente:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="seccion" x="5" y="210" width="100" height="20" uuid="f82680f2-f3c9-49af-8fea-f3de3a602568"/>
+				<text><![CDATA[ISR]]></text>
 			</staticText>
 		</band>
 	</detail>
