@@ -16,6 +16,7 @@ import org.decomisims.modelo.RamosISREngine;
 import org.decomisims.modelo.RangoISR;
 import org.decomisims.reports.BaseTributaria;
 import org.decomisims.reports.Comparativo;
+import org.decomisims.reports.JasperResourceLoader;
 import org.decomisims.util.Format;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -140,11 +141,12 @@ public class Home extends javax.swing.JPanel implements Vista {
     private void jbGenerarReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGenerarReporteActionPerformed
         //
         try {
+
             Comparativo comp = new Comparativo();
             comp.setNombreCompleto(conceptos.getNombre());
             comp.setSalarioDiario(conceptos.getSalario());
             comp.setDias(conceptos.getDias());
-            
+
             // Calculo de horas extra
             HorasExtra extras = conceptos.getHoras();
             Integer hExentas = extras.getHorasExentas();
@@ -156,10 +158,10 @@ public class Home extends javax.swing.JPanel implements Vista {
             comp.setHorasGravadas(hGravadas);
             comp.setTotalHorasExentas(extras.getExcento());
             comp.setTotalHorasGravadas(extras.getGravado());
-            
+
             // Asistencia
             comp.setPremioAsistencia(conceptos.getPremioAsistencia());
-            
+
             comp.setAyudaHabitacion(conceptos.getAyudaHabitacion());
             comp.setAyudaComedor(conceptos.getAyudaComedor());
             comp.setValesDespensa(conceptos.getValesDespensa());
@@ -189,7 +191,7 @@ public class Home extends javax.swing.JPanel implements Vista {
             comp.setIngresoExcedente(ingresoGravado - comp.getLimiteInferior());
             comp.setCuotaExcedente(comp.getIngresoExcedente() * comp.getExcedente());
             comp.setISR(comp.getCuota() + comp.getCuotaExcedente());
-            
+
             // Ramos ISR
             RamosISREngine reng = new RamosISREngine(ingresoGravado);
             comp.setPatron(reng.getPatron());
@@ -198,18 +200,16 @@ public class Home extends javax.swing.JPanel implements Vista {
             comp.setRetencion(comp.getISR() + comp.getAsegurado());
             // Total ingreso
             comp.setIngresoNeto(comp.getIngresoBruto() - comp.getRetencion());
-            
+
             // Grafica
             List<BaseTributaria> res = new ArrayList<>(3);
             res.add(new BaseTributaria("ISR", comp.getIngresoNeto()));
             res.add(new BaseTributaria("IMSS Mínimas", 1145d));
             res.add(new BaseTributaria("IMSS Superiores", 1345d));
-            
 
             // Report, render, show
             jrComp.doReport(comp, res, reng.getRamos());
-            
-            
+
             jtpMain.getModel().setSelectedIndex(3);
         } catch (AppException apex) {
             log.error(apex.getMessage(), apex);
