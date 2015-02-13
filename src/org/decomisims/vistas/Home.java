@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
+import org.apache.commons.lang3.time.DateUtils;
 import org.decomisims.app.Aplicacion;
 import org.decomisims.app.Vista;
 import org.decomisims.error.AppError;
@@ -16,7 +17,6 @@ import org.decomisims.modelo.RamosISREngine;
 import org.decomisims.modelo.RangoISR;
 import org.decomisims.reports.BaseTributaria;
 import org.decomisims.reports.Comparativo;
-import org.decomisims.reports.JasperResourceLoader;
 import org.decomisims.util.Format;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -139,9 +139,7 @@ public class Home extends javax.swing.JPanel implements Vista {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbGenerarReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGenerarReporteActionPerformed
-        //
         try {
-
             Comparativo comp = new Comparativo();
             comp.setNombreCompleto(conceptos.getNombre());
             comp.setSalarioDiario(conceptos.getSalario());
@@ -161,7 +159,6 @@ public class Home extends javax.swing.JPanel implements Vista {
 
             // Asistencia
             comp.setPremioAsistencia(conceptos.getPremioAsistencia());
-
             comp.setAyudaHabitacion(conceptos.getAyudaHabitacion());
             comp.setAyudaComedor(conceptos.getAyudaComedor());
             comp.setValesDespensa(conceptos.getValesDespensa());
