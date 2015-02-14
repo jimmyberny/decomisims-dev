@@ -76,9 +76,9 @@ public class JRComparativo extends javax.swing.JPanel {
         return jr != null;
     }
 
-    public void doReport(Comparativo comp, 
-            List<BaseTributaria> datos,
-            List<RamoISR> ramos) {
+    public void doReport(Comparativo comp,
+            BaseIMSS lss,
+            List<BaseTributaria> datos) {
         if (jr == null) {
             return;
         }
@@ -88,14 +88,14 @@ public class JRComparativo extends javax.swing.JPanel {
             // 
             params.put("FECHA", new Date());
             params.put("COMPARATIVO", comp);
-            params.put("RAMOS", ramos);
+            params.put("RAMOS", comp.getRamos());
             params.put("GRAFICA", datos);
+            params.put("LSS", lss);
             // Esta
             ResourceBundle bundle = ResourceBundle.getBundle("org/decomisims/reports/comparativo", Locale.getDefault());
             params.put("REPORT_RESOURCE_BUNDLE", bundle);
 
             // 
-            
             JasperPrint jp = JasperFillManager.fillReport(jr, params, new JREmptyDataSource(1));
             jrvView.update(jp);
         } catch (JRException jrex) {

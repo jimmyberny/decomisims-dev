@@ -13,6 +13,8 @@ import org.decomisims.util.Format;
  */
 public class ValorExento extends javax.swing.JPanel {
 
+    private static final long serialVersionUID = 1123581321L;
+
     private Double referencia;
 
     public ValorExento() {
@@ -56,9 +58,17 @@ public class ValorExento extends javax.swing.JPanel {
     public void init(Double base, Double porcentaje) {
         referencia = base * porcentaje;
     }
-    
+
     public Double getValor() {
         return Format.DECIMAL.parse(jtfValor.getText(), 0d);
+    }
+
+    public Double getExcedente() {
+        if (getValor() > referencia) {
+            return getValor() - referencia;
+        } else {
+            return 0d;
+        }
     }
 
     @SuppressWarnings("unchecked")

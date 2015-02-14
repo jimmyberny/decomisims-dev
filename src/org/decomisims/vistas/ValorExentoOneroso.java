@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
  */
 public class ValorExentoOneroso extends javax.swing.JPanel {
 
+    private static final long serialVersionUID = 1123581321L;
     private static final Logger log = LoggerFactory.getLogger(ValorExentoOneroso.class);
     private Salarios salarios;
 
@@ -106,6 +107,10 @@ public class ValorExentoOneroso extends javax.swing.JPanel {
 
     public Double getValor() {
        return Format.DECIMAL.parse(jtfValor.getText(), 0d);
+    }
+    
+    public Double getCobroOneroso() {
+        return Format.DECIMAL.parse(jtfCobro.getText(), 0d);
     }
 
     @SuppressWarnings("unchecked")

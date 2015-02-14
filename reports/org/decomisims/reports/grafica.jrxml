@@ -5,33 +5,39 @@
 	<property name="ireport.y" value="0"/>
 	<field name="_THIS" class="org.decomisims.reports.BaseTributaria"/>
 	<summary>
-		<band height="280" splitType="Stretch">
-			<barChart>
-				<chart isShowLegend="true" theme="default">
-					<reportElement x="0" y="0" width="540" height="280" uuid="f3063276-5eb8-4a44-9ca9-a4ea626b2734"/>
+		<band height="320" splitType="Stretch">
+			<stackedBarChart>
+				<chart isShowLegend="true">
+					<reportElement x="16" y="0" width="520" height="320" uuid="a2f3e127-0f0c-4f83-a9fd-f45a5dd3b97b"/>
 					<chartTitle/>
 					<chartSubtitle/>
 					<chartLegend position="Left"/>
 				</chart>
 				<categoryDataset>
 					<categorySeries>
-						<seriesExpression><![CDATA["Base tributaria"]]></seriesExpression>
+						<seriesExpression><![CDATA["Patron"]]></seriesExpression>
 						<categoryExpression><![CDATA[$F{_THIS}.getNombre()]]></categoryExpression>
-						<valueExpression><![CDATA[$F{_THIS}.getValor()]]></valueExpression>
-						<labelExpression><![CDATA[org.decomisims.util.Format.CURRENCY.format($F{_THIS}.getValor())]]></labelExpression>
+						<valueExpression><![CDATA[$F{_THIS}.getPatron()]]></valueExpression>
+						<labelExpression><![CDATA[org.decomisims.util.Format.CURRENCY.format($F{_THIS}.getPatron())]]></labelExpression>
+					</categorySeries>
+					<categorySeries>
+						<seriesExpression><![CDATA["Asegurado"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{_THIS}.getNombre()]]></categoryExpression>
+						<valueExpression><![CDATA[$F{_THIS}.getAsegurado()]]></valueExpression>
+						<labelExpression><![CDATA[org.decomisims.util.Format.CURRENCY.format($F{_THIS}.getAsegurado())]]></labelExpression>
 					</categorySeries>
 				</categoryDataset>
-				<barPlot isShowLabels="true" isShowTickLabels="true" isShowTickMarks="false">
+				<barPlot isShowLabels="true" isShowTickLabels="true" isShowTickMarks="true">
 					<plot/>
 					<itemLabel/>
 					<categoryAxisFormat>
-						<axisFormat verticalTickLabels="false"/>
+						<axisFormat/>
 					</categoryAxisFormat>
 					<valueAxisFormat>
-						<axisFormat verticalTickLabels="false"/>
+						<axisFormat/>
 					</valueAxisFormat>
 				</barPlot>
-			</barChart>
+			</stackedBarChart>
 		</band>
 	</summary>
 </jasperReport>

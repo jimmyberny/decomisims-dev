@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
-import org.apache.commons.lang3.time.DateUtils;
 import org.decomisims.app.Aplicacion;
 import org.decomisims.app.Vista;
 import org.decomisims.error.AppError;
@@ -15,6 +14,7 @@ import org.decomisims.error.AppException;
 import org.decomisims.modelo.ISREngine;
 import org.decomisims.modelo.RamosISREngine;
 import org.decomisims.modelo.RangoISR;
+import org.decomisims.reports.BaseIMSS;
 import org.decomisims.reports.BaseTributaria;
 import org.decomisims.reports.Comparativo;
 import org.decomisims.util.Format;
@@ -139,80 +139,153 @@ public class Home extends javax.swing.JPanel implements Vista {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbGenerarReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGenerarReporteActionPerformed
-        try {
-            Comparativo comp = new Comparativo();
-            comp.setNombreCompleto(conceptos.getNombre());
-            comp.setSalarioDiario(conceptos.getSalario());
-            comp.setDias(conceptos.getDias());
+        Comparativo comp = new Comparativo();
+        comp.setNombreCompleto(conceptos.getNombre());
+        comp.setSalarioDiario(conceptos.getSalario());
+        comp.setDias(conceptos.getDias());
+        comp.setSalario(comp.getSalarioDiario() * comp.getDias());
 
-            // Calculo de horas extra
-            HorasExtra extras = conceptos.getHoras();
-            Integer hExentas = extras.getHorasExentas();
-            Integer hGravadas = extras.getHorasGravadas();
-            Integer hTots = hExentas + hGravadas;
-            comp.setHoras(hTots);
-            comp.setSalarioHora(extras.getSalarioHora());
-            comp.setHorasExentas(hExentas);
-            comp.setHorasGravadas(hGravadas);
-            comp.setTotalHorasExentas(extras.getExcento());
-            comp.setTotalHorasGravadas(extras.getGravado());
+        // Calculo de horas extra
+        HorasExtra extras = conceptos.getHoras();
+        Integer hExentas = extras.getHorasExentas();
+        Integer hGravadas = extras.getHorasGravadas();
+        Integer hTots = hExentas + hGravadas;
+        comp.setHoras(hTots);
+        comp.setSalarioHora(extras.getSalarioHora());
+        comp.setHorasExentas(hExentas);
+        comp.setHorasGravadas(hGravadas);
+        comp.setTotalHorasExentas(extras.getExcento());
+        comp.setTotalHorasGravadas(extras.getGravado());
 
-            // Asistencia
-            comp.setPremioAsistencia(conceptos.getPremioAsistencia());
-            comp.setAyudaHabitacion(conceptos.getAyudaHabitacion());
-            comp.setAyudaComedor(conceptos.getAyudaComedor());
-            comp.setValesDespensa(conceptos.getValesDespensa());
-            comp.setValesGasolina(conceptos.getValesGasolina());
+        // Asistencia
+        comp.setPremioAsistencia(conceptos.getPremioAsistencia());
+        comp.setAyudaHabitacion(conceptos.getAyudaHabitacion());
+        comp.setAyudaComedor(conceptos.getAyudaComedor());
+        comp.setValesDespensa(conceptos.getValesDespensa());
+        comp.setValesGasolina(conceptos.getValesGasolina());
 
-            // Determinar el valor de ISR
-            // Sumar horas gravadas
-            Double ingresoExento = 0d;
-            ingresoExento += comp.getTotalHorasExentas();
+        // Determinar el valor de ISR
+        // Sumar horas gravadas
+        Double ingresoExento = 0d;
+        ingresoExento += comp.getTotalHorasExentas();
 
-            Double ingresoGravado = comp.getSalarioDiario() * comp.getDias();
-            ingresoGravado += comp.getTotalHorasGravadas();
-            ingresoGravado += comp.getPremioAsistencia();
-            ingresoGravado += comp.getAyudaHabitacion();
-            ingresoGravado += comp.getAyudaComedor();
-            ingresoGravado += comp.getValesDespensa();
-            ingresoGravado += comp.getValesGasolina();
-            comp.setIngresoExento(ingresoExento);
-            comp.setIngresoGravado(ingresoGravado);
-            comp.setIngresoBruto(ingresoGravado + ingresoExento);
-            // ISR
-            RangoISR rango = ISREngine.ESCALA.getRango(ingresoGravado);
-            comp.setLimiteInferior(rango.getMin());
-            comp.setLimiteSuperior(rango.getMax());
-            comp.setExcedente(rango.getExcedente()); // Porcentaje excedente
-            comp.setCuota(rango.getCuota());
-            comp.setIngresoExcedente(ingresoGravado - comp.getLimiteInferior());
-            comp.setCuotaExcedente(comp.getIngresoExcedente() * comp.getExcedente());
-            comp.setISR(comp.getCuota() + comp.getCuotaExcedente());
+        Double ingresoGravado = comp.getSalarioDiario() * comp.getDias();
+        ingresoGravado += comp.getTotalHorasGravadas();
+        ingresoGravado += comp.getPremioAsistencia();
+        ingresoGravado += comp.getAyudaHabitacion();
+        ingresoGravado += comp.getAyudaComedor();
+        ingresoGravado += comp.getValesDespensa();
+        ingresoGravado += comp.getValesGasolina();
+        comp.setIngresoExento(ingresoExento);
+        comp.setIngresoGravado(ingresoGravado);
+        comp.setIngresoBruto(ingresoGravado + ingresoExento);
+        // ISR
+        RangoISR rango = ISREngine.ESCALA.getRango(ingresoGravado);
+        comp.setLimiteInferior(rango.getMin());
+        comp.setLimiteSuperior(rango.getMax());
+        comp.setExcedente(rango.getExcedente()); // Porcentaje excedente
+        comp.setCuota(rango.getCuota());
+        comp.setIngresoExcedente(ingresoGravado - comp.getLimiteInferior());
+        comp.setCuotaExcedente(comp.getIngresoExcedente() * comp.getExcedente());
+        comp.setISR(comp.getCuota() + comp.getCuotaExcedente());
 
-            // Ramos ISR
-            RamosISREngine reng = new RamosISREngine(ingresoGravado);
-            comp.setPatron(reng.getPatron());
-            comp.setAsegurado(reng.getAsegurado());
-            // Total retencion
-            comp.setRetencion(comp.getISR() + comp.getAsegurado());
-            // Total ingreso
-            comp.setIngresoNeto(comp.getIngresoBruto() - comp.getRetencion());
+        // Ramos ISR
+        RamosISREngine reng = new RamosISREngine(ingresoGravado);
+        comp.setPatron(reng.getPatron());
+        comp.setAsegurado(reng.getAsegurado());
+        comp.setRamos(reng.getRamos());
+        // Total retencion
+        comp.setRetencion(comp.getISR() + comp.getAsegurado());
+        // Total ingreso
+        comp.setIngresoNeto(comp.getIngresoBruto() - comp.getRetencion());
+        // LSS
+        BaseIMSS lss = calcularLSS();
+        // Grafica
+        List<BaseTributaria> res = new ArrayList<>(3);
+        res.add(new BaseTributaria("ISR", comp.getPatron(), comp.getAsegurado()));
+        res.add(new BaseTributaria("IMSS", lss.getPatron(), lss.getAsegurado()));
 
-            // Grafica
-            List<BaseTributaria> res = new ArrayList<>(3);
-            res.add(new BaseTributaria("ISR", comp.getIngresoNeto()));
-            res.add(new BaseTributaria("IMSS Mínimas", 1145d));
-            res.add(new BaseTributaria("IMSS Superiores", 1345d));
+        // Report, render, show
+        jrComp.doReport(comp, lss, res);
 
-            // Report, render, show
-            jrComp.doReport(comp, res, reng.getRamos());
-
-            jtpMain.getModel().setSelectedIndex(3);
-        } catch (AppException apex) {
-            log.error(apex.getMessage(), apex);
-        }
+        jtpMain.getModel().setSelectedIndex(3);
     }//GEN-LAST:event_jbGenerarReporteActionPerformed
 
+    private BaseIMSS calcularLSS() {
+        BaseIMSS res = new BaseIMSS();
+        res.setAntiguedad(conceptos.getAntiguedad());
+        res.setPrima(conceptos.getPrima());
+        res.setDiasVacaciones(conceptos.getVacaciones());
+        res.setDiasPrima(conceptos.getDiasPrima());
+        res.setDiasAguinaldo(conceptos.getAguinaldo());
+
+        Double tDias = 365d;
+        tDias += res.getDiasVacaciones();
+        tDias += res.getDiasPrima();
+        tDias += res.getDiasAguinaldo();
+        Double factor = tDias / 365;
+        res.setDiasBase(365);
+        res.setTotalDias(tDias);
+        res.setFactor(factor);
+
+        res.setAsistencia(conceptos.getPremioAsistencia());
+        res.setHabitacion(conceptos.getAyudaHabitacion());
+        res.setHabitacionCobro(conceptos.getAyudaHabitacionCobro());
+        res.setHabitacionIntegrado(res.getHabitacion() - res.getHabitacionCobro());
+        res.setComedor(conceptos.getAyudaComedor());
+        res.setComedorCobro(conceptos.getAyudaComedorCobro());
+        res.setComedorIntegrado(res.getComedor() - res.getComedorCobro());
+        res.setDespensa(conceptos.getValesDespensa());
+        res.setDespensaIntegrado(conceptos.getDespensaIntegrado());
+        Double despensaNoInt = res.getDespensa() - res.getDespensaIntegrado();
+        res.setGasolina(conceptos.getValesGasolina());
+
+        HorasExtra horas = conceptos.getHoras();
+        res.setHoras(horas.getHorasExentas());
+        res.setHorasExcedentes(horas.getHorasGravadas());
+        Double theNoInt = res.getHoras() * horas.getSalarioHora();
+
+        Double theInt = res.getHorasExcedentes() * horas.getSalarioHora();
+        res.setHorasIntegrado(theInt);
+        Double varMensual = 0d;
+        varMensual += res.getAsistencia();
+        varMensual += res.getHabitacionIntegrado();
+        varMensual += res.getComedorIntegrado();
+        varMensual += res.getDespensaIntegrado();
+        res.setVariableMensual(varMensual);
+
+        Double sinIntegrar = 0d;
+        sinIntegrar += despensaNoInt;
+        sinIntegrar += conceptos.getValesGasolina();
+        sinIntegrar += theNoInt;
+
+        Double estBimestral = varMensual * 2;
+        res.setVariableBimestral(estBimestral);
+        Double varDiario = estBimestral / 60;
+        res.setVariableDiario(varDiario);
+        res.setSalarioDiario(conceptos.getSalario());
+        Double diarioBase = res.getSalarioDiario() * factor;
+        res.setSalarioBase(diarioBase);
+        Double sdi = diarioBase + varDiario;
+        res.setSalarioIntegrado(sdi);
+        res.setSalarioBaseCotizacion(sdi * conceptos.getDias());
+        // Calculo de imss
+        RamosISREngine reng = new RamosISREngine(res.getSalarioBaseCotizacion());
+        res.setDeduccion(reng.getAsegurado());
+        res.setRamos(reng.getRamos());
+        res.setPatron(reng.getPatron());
+        res.setAsegurado(reng.getAsegurado());
+
+        Double salario = conceptos.getDias() * conceptos.getSalario();
+        res.setSalario(salario);
+        Double ingresoBruto = 0d;
+        ingresoBruto += res.getSalario();
+        ingresoBruto += res.getVariableMensual();
+        res.setIngresoBruto(ingresoBruto);
+        res.setIngresoNeto(ingresoBruto - res.getDeduccion());
+
+        return res;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.decomisims.vistas.Conceptos conceptos;

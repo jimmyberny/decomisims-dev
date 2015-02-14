@@ -11,14 +11,16 @@ public class BaseTributaria implements Serializable {
     private static final long serialVersionUID = 1123581321L;
 
     private String nombre;
-    private Double valor;
+    private Double patron;
+    private Double asegurado;
 
     public BaseTributaria() {
     }
 
-    public BaseTributaria(String nombre, Double valor) {
+    public BaseTributaria(String nombre, Double patron, Double asegurado) {
         this.nombre = nombre;
-        this.valor = valor;
+        this.patron = patron;
+        this.asegurado = asegurado;
     }
 
     public String getNombre() {
@@ -29,12 +31,24 @@ public class BaseTributaria implements Serializable {
         this.nombre = nombre;
     }
 
-    public Double getValor() {
-        return valor;
+    public Double getPatron() {
+        return patron;
     }
 
-    public void setValor(Double valor) {
-        this.valor = valor;
+    public void setPatron(Double patron) {
+        this.patron = patron;
+    }
+
+    public Double getAsegurado() {
+        return asegurado;
+    }
+
+    public void setAsegurado(Double asegurado) {
+        this.asegurado = asegurado;
+    }
+
+    public Double getTotal() {
+        return patron + asegurado;
     }
 
 }

@@ -1,6 +1,8 @@
 package org.decomisims.reports;
 
 import java.io.Serializable;
+import java.util.List;
+import org.decomisims.modelo.RamoISR;
 
 /**
  *
@@ -39,6 +41,7 @@ public class Comparativo implements Serializable {
     private Double patron;
     private Double asegurado;
     private Double ISR;
+    private List<RamoISR> ramos;
 
     public Comparativo() {
     }
@@ -273,6 +276,14 @@ public class Comparativo implements Serializable {
 
     public void setISR(Double ISR) {
         this.ISR = ISR;
+    }
+
+    public List<RamoISR> getRamos() {
+        return ramos;
+    }
+
+    public void setRamos(List<RamoISR> ramos) {
+        this.ramos = ramos;
     }
 
 }
