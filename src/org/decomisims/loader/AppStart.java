@@ -21,7 +21,12 @@ public class AppStart {
             @Override
             public void run() {
                 try {
-                    UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+//                    UIManager.LookAndFeelInfo[] lafs = UIManager.getInstalledLookAndFeels();
+//                    for (UIManager.LookAndFeelInfo laf : lafs) {
+//                        log.info("{}", laf.getClassName());
+//                    }
+                    
+                    UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
 
                     Main window = new Main();
                     window.setVisible(true);

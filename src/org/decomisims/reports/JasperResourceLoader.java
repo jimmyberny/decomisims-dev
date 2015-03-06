@@ -8,6 +8,8 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.net.URL;
+import java.util.logging.Level;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperReport;
@@ -23,14 +25,13 @@ import org.slf4j.LoggerFactory;
 public class JasperResourceLoader {
 
     public static Logger log = LoggerFactory.getLogger(JasperResourceLoader.class);
-    //
-
+    
     public static JasperReport getJasper(String path) {
         JasperReport res = null;
         InputStream in = null;
         ObjectInputStream ois = null;
         try {
-            in = JasperResourceLoader.class.getResourceAsStream(path + ".ser");
+            in = JasperResourceLoader.class.getResourceAsStream(path + ".jasper");
             if (in == null) {
                 JasperDesign design = JRXmlLoader.load(JasperResourceLoader.class.getResourceAsStream(path + ".jrxml"));
                 res = JasperCompileManager.compileReport(design);
@@ -96,13 +97,23 @@ public class JasperResourceLoader {
     }
 
     public static void main(String[] args) {
-        // JasperReport t1 = getJasper("org/decomisims/reports/grafica");
-        // log.info("Ok 1");
-        generate("/org/decomisims/reports/grafica", "grafica.ser");
-        log.info("Ok 1");
-        generate("/org/decomisims/reports/ramos", "ramos.ser");
-        log.info("Ok 2");
-        generate("/org/decomisims/reports/comparativo", "comparativo.ser");
-        log.info("Ok 3");
+        try {
+            URL grafica = JasperResourceLoader.class.getResource("/org/decomisims/reports/grafica.jrxml");
+            JasperCompileManager.compileReportToFile(grafica.getFile());
+            URL ramos = JasperResourceLoader.class.getResource("/org/decomisims/reports/ramos.jrxml");
+            JasperCompileManager.compileReportToFile(ramos.getFile());
+            
+
+            // JasperReport t1 = getJasper("org/decomisims/reports/grafica");
+            // log.info("Ok 1");
+            // generate("/org/decomisims/reports/grafica", "grafica.ser");
+            // log.info("Ok 1");
+            // generate("/org/decomisims/reports/ramos", "ramos.ser");
+            // log.info("Ok 2");
+            // generate("/org/decomisims/reports/comparativo", "comparativo.ser");
+            // log.info("Ok 3");
+        } catch (JRException ex) {
+            log.error(ex.getMessage(), ex);
+        }
     }
 }
