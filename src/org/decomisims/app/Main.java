@@ -36,7 +36,7 @@ public class Main extends javax.swing.JFrame implements Aplicacion {
     private Properties config;
     // 
     private Vista actual;
-    private Map<String, Vista> cache = new HashMap<>(10);
+    private Map<String, Vista> cache = new HashMap<String, Vista>(10);
     //
     private String ultimaVista;
 

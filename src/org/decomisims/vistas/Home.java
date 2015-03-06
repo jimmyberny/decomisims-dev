@@ -201,7 +201,7 @@ public class Home extends javax.swing.JPanel implements Vista {
         // LSS
         BaseIMSS lss = calcularLSS();
         // Grafica
-        List<BaseTributaria> res = new ArrayList<>(3);
+        List<BaseTributaria> res = new ArrayList<BaseTributaria>(3);
         res.add(new BaseTributaria("ISR", comp.getPatron(), comp.getAsegurado()));
         res.add(new BaseTributaria("IMSS", lss.getPatron(), lss.getAsegurado()));
 

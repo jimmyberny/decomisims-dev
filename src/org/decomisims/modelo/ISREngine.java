@@ -32,7 +32,7 @@ public class ISREngine {
     private final List<RangoISR> rangos;
 
     public ISREngine() {
-        rangos = new LinkedList<>();
+        rangos = new LinkedList<RangoISR>();
     }
 
     private void add(RangoISR rango) {

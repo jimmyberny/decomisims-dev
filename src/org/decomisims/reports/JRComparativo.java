@@ -83,7 +83,7 @@ public class JRComparativo extends javax.swing.JPanel {
             return;
         }
         try {
-            Map<String, Object> params = new HashMap<>(4);
+            Map<String, Object> params = new HashMap<String, Object>(4);
 
             // 
             params.put("FECHA", new Date());

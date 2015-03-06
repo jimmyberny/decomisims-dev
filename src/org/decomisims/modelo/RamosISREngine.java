@@ -17,7 +17,7 @@ public class RamosISREngine {
 
     public RamosISREngine(Double gravado) {
         // Do calcs
-        res = new ArrayList<>(5);
+        res = new ArrayList<RamoISR>(5);
         RamoISR tmp = new RamoISR();
         tmp.setNombre("CF * S/1SMDF");
         tmp.setPcPatron(0.204);

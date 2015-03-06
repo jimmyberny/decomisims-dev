@@ -11,6 +11,7 @@
 	<style name="subseccion" hAlign="Center" isBold="true"/>
 	<style name="bloque" mode="Opaque" forecolor="#FFFFFF" backcolor="#00CCCC" hAlign="Center" vAlign="Middle" isBold="true"/>
 	<subDataset name="MyDataset" uuid="f8075af5-4cbb-420b-bd65-ee44c30cfda7"/>
+        
 	<parameter name="FECHA" class="java.util.Date">
 		<defaultValueExpression><![CDATA[new java.util.Date()]]></defaultValueExpression>
 	</parameter>
@@ -61,13 +62,7 @@
 			<subreport>
 				<reportElement positionType="Float" x="1" y="229" width="569" height="14" isRemoveLineWhenBlank="true" isPrintInFirstWholeBand="true" uuid="16c862d7-feb4-4ae2-ae6d-a80babc1ccc8"/>
 				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{RAMOS})]]></dataSourceExpression>
-				<subreportExpression><![CDATA[JasperCompileManager.compileReport(
-                        net.sf.jasperreports.engine.xml.JRXmlLoader.load(
-                            getClass().getResourceAsStream(
-                                "/org/decomisims/reports/ramos.jrxml"
-                            )
-                         )
-                )]]></subreportExpression>
+				<subreportExpression><![CDATA[JasperCompileManager.compileReport(org.decomisims.reports.JasperResourceLoader.getJasper("/org/decomisims/reports/ramos")) ]]></subreportExpression>
 			</subreport>
 			<staticText>
 				<reportElement style="label" positionType="Float" x="245" y="286" width="120" height="14" uuid="69d7f3a1-3207-4f46-a2be-4c64c78ccc06"/>
@@ -573,13 +568,7 @@
 			<subreport>
 				<reportElement positionType="Float" x="2" y="575" width="569" height="14" isRemoveLineWhenBlank="true" isPrintInFirstWholeBand="true" uuid="476553bb-6f55-4605-8a73-9d2d3b835a7a"/>
 				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{LSS}.getRamos())]]></dataSourceExpression>
-				<subreportExpression><![CDATA[JasperCompileManager.compileReport(
-                        net.sf.jasperreports.engine.xml.JRXmlLoader.load(
-                            getClass().getResourceAsStream(
-                                "/org/decomisims/reports/ramos.jrxml"
-                            )
-                         )
-                )]]></subreportExpression>
+				<subreportExpression><![CDATA[JasperCompileManager.compileReport(org.decomisims.reports.JasperResourceLoader.getJasper("/org/decomisims/reports/ramos"))]]></subreportExpression>
 			</subreport>
 			<staticText>
 				<reportElement style="label" positionType="Float" x="246" y="609" width="120" height="14" uuid="f0c3fa13-524b-4a6f-91e7-03976982d6a5"/>
